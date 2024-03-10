@@ -1,0 +1,100 @@
+-----------------# Load the datasets:
+import pandas as pd
+
+# URLs for development and testing datasets
+development_data_url = 'https://files.challengerocket.com/files/lions-den-ing-2024/development_sample.csv'
+testing_data_url = 'https://files.challengerocket.com/files/lions-den-ing-2024/testing_sample.csv'
+
+# Load development dataset
+development_data = pd.read_csv(development_data_url)
+
+# Load testing dataset
+testing_data = pd.read_csv(testing_data_url)
+
+# Display first few rows of development data
+print("Development Data:")
+print(development_data.head())
+
+# Display first few rows of testing data
+print("\nTesting Data:")
+print(testing_data.head())
+
+
+----------------------------------# Explore the data:
+# Check structure of development dataset
+print("Development Data Info:")
+print(development_data.info())
+
+# Check structure of testing dataset
+print("\nTesting Data Info:")
+print(testing_data.info())
+
+# Check summary statistics for numerical columns in development dataset
+print("\nSummary Statistics for Development Data:")
+print(development_data.describe())
+
+# Check summary statistics for numerical columns in testing dataset
+print("\nSummary Statistics for Testing Data:")
+print(testing_data.describe())
+
+# Check for missing values in development dataset
+print("\nMissing Values in Development Data:")
+print(development_data.isnull().sum())
+
+# Check for missing values in testing dataset
+print("\nMissing Values in Testing Data:")
+print(testing_data.isnull().sum())
+
+# Check unique values for categorical columns in development dataset
+print("\nUnique Values for Categorical Columns in Development Data:")
+for column in development_data.select_dtypes(include='object'):
+    print(f"\n{column}:")
+    print(development_data[column].unique())
+
+# Check unique values for categorical columns in testing dataset
+print("\nUnique Values for Categorical Columns in Testing Data:")
+for column in testing_data.select_dtypes(include='object'):
+    print(f"\n{column}:")
+    print(testing_data[column].unique())
+
+------------------------# Perform descriptive statistics: Compute summary statistics for numerical variables and explore distributions.
+
+# Compute summary statistics for numerical variables in development dataset
+development_numeric_summary = development_data.describe()
+
+# Compute summary statistics for numerical variables in testing dataset
+testing_numeric_summary = testing_data.describe()
+
+# Display summary statistics
+print("Summary Statistics for Numerical Variables in Development Dataset:")
+print(development_numeric_summary)
+
+print("\nSummary Statistics for Numerical Variables in Testing Dataset:")
+print(testing_numeric_summary)
+
+
+---------------------------------# Missing values in dataset
+
+# Impute missing values in development dataset
+development_data_imputed = development_data.copy()
+for column in development_data_imputed.columns:
+    if development_data_imputed[column].dtype == 'object':
+        development_data_imputed[column].fillna(development_data_imputed[column].mode()[0], inplace=True)
+    else:
+        development_data_imputed[column].fillna(development_data_imputed[column].mean(), inplace=True)
+
+# Impute missing values in testing dataset
+testing_data_imputed = testing_data.copy()
+for column in testing_data_imputed.columns:
+    if testing_data_imputed[column].dtype == 'object':
+        testing_data_imputed[column].fillna(testing_data_imputed[column].mode()[0], inplace=True)
+    else:
+        testing_data_imputed[column].fillna(testing_data_imputed[column].mean(), inplace=True)
+
+# Display number of missing values after imputation
+print("Number of missing values in development dataset after imputation:")
+print(development_data_imputed.isnull().sum())
+
+print("\nNumber of missing values in testing dataset after imputation:")
+print(testing_data_imputed.isnull().sum())
+
